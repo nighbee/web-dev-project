@@ -1,7 +1,11 @@
 # MathPath — Interactive Math Learning Platform
 
-MathPath is a full-stack web platform where students follow a structured pathway of math lessons, watch lecture videos, complete AI-generated quizzes, and track their progress on a global leaderboard.
 
+MathPath is a full-stack web platform where students follow a structured pathway of math lessons, watch lecture videos, complete AI-generated quizzes, and track their progress on a global leaderboard.
+## Team Members
+- Laila Taubay
+- Zhanibek Batyrbekov
+- Almaz Toktassin
 ## Project Idea
 
 Students learning math independently often lack structure and feedback. MathPath solves this by combining:
