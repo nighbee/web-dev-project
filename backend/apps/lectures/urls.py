@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    get_all_videos, user_logout, UserLoginView, UserRegistrationView,
+    get_all_videos, get_video_detail, user_logout, UserLoginView, UserRegistrationView,
     FavoriteListView, FavoriteDetailView,
     NoteListCreateView, NoteDetailView
 )
@@ -13,6 +13,7 @@ urlpatterns = [
 
     # Видео
     path('videos/', get_all_videos, name='video-list'),
+    path('videos/<int:pk>/', get_video_detail, name='video-detail'),
 
     # Избранное
     path('favorites/', FavoriteListView.as_view(), name='favorite-list'),

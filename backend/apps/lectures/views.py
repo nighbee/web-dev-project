@@ -20,6 +20,16 @@ def get_all_videos(request):
     serializer = VideoBasicSerializer(videos, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_video_detail(request, pk):
+    try:
+        video = Video.objects.get(pk=pk)
+    except Video.DoesNotExist:
+        return Response({"detail": "Video not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = VideoBasicSerializer(video)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def user_logout(request): 
     return Response({'message': "logged out"}, status=200)
