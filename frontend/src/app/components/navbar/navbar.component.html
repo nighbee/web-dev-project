@@ -1,0 +1,14 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a class="brand" routerLink="/videos">mathWay</a>
+  </div>
+  <div class="nav-right">
+    <a routerLink="/videos">Videos</a>
+    <a href="#">About Us</a>
+    @if (auth.isLoggedIn()) {
+      <button (click)="logout()">Logout</button>
+    } @else {
+      <button (click)="login()">Login / Register</button>
+    }
+  </div>
+</nav>
