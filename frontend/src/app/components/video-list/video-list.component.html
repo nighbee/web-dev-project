@@ -1,0 +1,24 @@
+<div class="video-list-container">
+  <h1>Math Lessons</h1>
+
+  <input
+    type="text"
+    placeholder="Search videos..."
+    [(ngModel)]="searchBar"
+    class="search-bar"
+  />
+
+  <div class="video-grid">
+    @for (video of filteredVideos(); track video.id) {
+      <div class="video-card" (click)="navigate(video.id)">
+        <div class="thumbnail">
+          <img
+            [src]="'https://img.youtube.com/vi/' + video.youtube_id + '/hqdefault.jpg'"
+            [alt]="video.title"
+          />
+        </div>
+        <p class="title">{{ video.title }}</p>
+      </div>
+    }
+  </div>
+</div>
