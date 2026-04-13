@@ -3,8 +3,8 @@
 ## 1. Startup
 ```bash
 cd backend
-python manage.py migrate
-python manage.py runserver
+python manage.py seed_mathway 
+python manage.py runserver 8080 
 ```
 
 ---

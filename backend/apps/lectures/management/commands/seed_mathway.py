@@ -3,21 +3,17 @@ import re
 from django.core.management.base import BaseCommand
 from django.apps import apps
 
+from django.conf import settings
+
 class Command(BaseCommand):
     help = 'Seed the database with videos from docs/videoLinks.md'
 
     def handle(self, *args, **options):
         Video = apps.get_model('lectures', 'Video')
-        # Path to the file (assuming we are running from backend/ directory)
-        # Docs is one level up from backend
-        file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), 'docs', 'videoLinks.py' if False else 'videoLinks.md')
         
-        # Simplified path logic for this specific workspace
-        # d:\projects\web-dev-project\backend\apps\lectures\management\commands\seed_mathway.py
-        # relative to workspace root: docs/videoLinks.md
-        
-        base_dir = r"d:\projects\web-dev-project"
-        md_file = os.path.join(base_dir, 'docs', 'videoLinks.md')
+        # Determine paths relative to the project root
+        project_root = settings.BASE_DIR.parent
+        md_file = project_root / 'docs' / 'videoLinks.md'
 
         if not os.path.exists(md_file):
             self.stdout.write(self.style.ERROR(f"File not found: {md_file}"))
