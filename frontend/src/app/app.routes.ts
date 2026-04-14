@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent, VideoListComponent, VideoDetailComponent } from './components';
+import { VideoListComponent } from './components';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

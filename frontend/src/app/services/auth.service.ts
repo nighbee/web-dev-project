@@ -6,8 +6,19 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private readonly API_URL = 'http://localhost:8000/api/auth';
 
-  token = signal<string | null>(localStorage.getItem('token'));
-  isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
+  token = signal<string | null>(this.getValidToken());
+  isLoggedIn = signal<boolean>(!!this.getValidToken());
+
+  private getValidToken(): string | null {
+    const token = localStorage.getItem('token');
+    // On app startup, validate token exists (actual expiry check done by backend)
+    if (token) {
+      return token;
+    }
+    // Clear any invalid token
+    localStorage.removeItem('token');
+    return null;
+  }
 
   constructor(private http: HttpClient) {}
 

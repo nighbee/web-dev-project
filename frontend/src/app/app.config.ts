@@ -15,7 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
     //provideForms()
+        importProvidersFrom(ReactiveFormsModule, FormsModule),
   ]
-    importProvidersFrom(ReactiveFormsModule, FormsModule),
-  ],
 };
