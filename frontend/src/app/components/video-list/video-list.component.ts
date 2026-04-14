@@ -1,8 +1,7 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IVideo } from '../../models';
 import { ApiService } from '../../services';
 
 @Component({
@@ -11,9 +10,10 @@ import { ApiService } from '../../services';
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
-export class VideoListComponent implements OnInit {
-  searchBar = '';
-  videos = signal<IVideo[]>([
+export class VideoListComponent {
+  searchBar = signal('');
+
+  videos = signal([
     { id: 1, title: 'GCD and LCM Made Easy', youtube_id: 'MRjeHY4jp6Q' },
     { id: 2, title: 'Addition and subtraction of rational numbers', youtube_id: 'v_lxItUWgbc' },
     { id: 3, title: 'Multiplication and division of rational numbers', youtube_id: 'nYe--f94k7A' },
@@ -30,16 +30,11 @@ export class VideoListComponent implements OnInit {
   ]);
 
   filteredVideos = computed(() => {
-    const q = this.searchBar.toLowerCase();
+    const q = this.searchBar().toLowerCase();
     return this.videos().filter(v => v.title.toLowerCase().includes(q));
   });
 
   constructor(private api: ApiService, private router: Router) {}
-
-  ngOnInit() {
-    // TODO: replace dummy data with API call
-    // this.api.getVideos().subscribe(videos => this.videos.set(videos));
-  }
 
   navigate(id: number) {
     this.router.navigate(['/videos', id]);

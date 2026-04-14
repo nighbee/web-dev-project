@@ -4,13 +4,13 @@
   align-items: center;
   padding: 0.75rem 2rem;
   background: #222;
-  color: white;
+  color: #fff;
 }
 
 .nav-left .brand {
   font-size: 1.4rem;
   font-weight: bold;
-  color: white;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -27,12 +27,12 @@
 }
 
 .nav-right a:hover {
-  color: white;
+  color: #fff;
 }
 
 .nav-right button {
   background: #007bff;
-  color: white;
+  color: #fff;
   border: none;
   padding: 0.4rem 1rem;
   border-radius: 4px;

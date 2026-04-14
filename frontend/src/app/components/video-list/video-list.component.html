@@ -4,7 +4,8 @@
   <input
     type="text"
     placeholder="Search videos..."
-    [(ngModel)]="searchBar"
+    [ngModel]="searchBar()"
+    (ngModelChange)="searchBar.set($event)"
     class="search-bar"
   />
 
