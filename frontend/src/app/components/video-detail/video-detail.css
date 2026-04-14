@@ -1,0 +1,17 @@
+.page { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+.back-btn { background: none; border: none; color: #3b82f6; font-size: 1rem; cursor: pointer; margin-bottom: 1rem; padding: 0; }
+h2 { margin-bottom: 1rem; }
+.video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 1rem; }
+.video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; }
+.fav-btn { padding: 0.6rem 1.2rem; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-bottom: 1.5rem; }
+.fav-btn:hover { background: #d97706; }
+.notes-section h3 { margin-bottom: 0.8rem; }
+textarea { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; resize: vertical; box-sizing: border-box; }
+.note-actions { display: flex; gap: 0.5rem; margin: 0.6rem 0 1rem; }
+.note-actions button { padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.cancel-btn { background: #6b7280 !important; }
+.note-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.8rem; margin-bottom: 0.8rem; }
+.note-btns { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.note-btns button { padding: 0.3rem 0.7rem; border: none; border-radius: 4px; cursor: pointer; background: #3b82f6; color: white; font-size: 0.85rem; }
+.del-btn { background: #ef4444 !important; }
+.error { color: red; }

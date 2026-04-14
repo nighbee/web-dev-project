@@ -1,0 +1,49 @@
+<div class="page">
+  <header>
+    <h1>🧮 mathWay</h1>
+    <div class="header-right">
+      <input 
+        type="text" 
+        placeholder="Search videos..." 
+        [(ngModel)]="searchBar" 
+      />
+      <button (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button [class.active]="!showFavs" (click)="showFavs = false">All Videos</button>
+    <button [class.active]="showFavs" (click)="showFavs = true">★ Favorites</button>
+  </nav>
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  <!-- Основной блок с видео -->
+  <div class="grid">
+    <!-- 1. Пока загружаются видео -->
+    @if (loading) {
+      <p class="loading">Loading videos...</p>
+    }
+
+    <!-- 2. Когда загрузилось — показываем видео -->
+    @if (!loading) {
+      @for (video of displayedVideos; track video.id) {
+        <div class="card">
+          <span class="card-title" (click)="openVideo(video.id)">{{ video.title }}</span>
+          <button class="fav-icon" (click)="toggleFavorite(video.id)">
+            {{ isFavorite(video.id) ? '★' : '☆' }}
+          </button>
+        </div>
+      }
+    }
+
+    <!-- 3. Когда загрузилось, но список пустой -->
+    @if (!loading && displayedVideos.length === 0) {
+      <p class="empty">
+        {{ showFavs ? 'No favorites yet' : 'No videos found' }}
+      </p>
+    }
+  </div>
+</div>

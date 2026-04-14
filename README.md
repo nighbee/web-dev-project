@@ -3,7 +3,7 @@
 **mathWay** is a minimal, straightforward video learning platform. It features a simple grid of math video lessons hosted on YouTube. Users can browse video titles, watch the lessons, save videos to their favorites, and write personal notes for each video. 
 
 ## Group Members (Group [Your Group Name/Number])
-* **Member 1:** layla Taubay  
+* **Member 1:** Laila Taubay  
 * **Member 2:** Zhanibek Batyrbekov
 * **Member 3:** Toktassin Almaz  
 

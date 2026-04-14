@@ -1,0 +1,41 @@
+<div class="page">
+  <button class="back-btn" (click)="goBack()">< Back</button>
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (video) {
+    <h2>{{ video.title }}</h2>
+
+    <div class="video-wrapper">
+      <iframe [src]="embedUrl | safeUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    @if (auth.isLoggedIn()) {
+      <button class="fav-btn" (click)="toggleFavorite()">
+        {{ isFavorite ? '? Remove from Favorites' : '? Add to Favorites' }}
+      </button>
+
+      <div class="notes-section">
+        <h3>My Notes</h3>
+        <textarea [(ngModel)]="noteContent" placeholder="Write a note..." rows="4"></textarea>
+        <div class="note-actions">
+          <button (click)="saveNote()">{{ editingNote ? 'Update Note' : 'Save Note' }}</button>
+          @if (editingNote) {
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          }
+        </div>
+        @for (note of notes; track note.id) {
+          <div class="note-card">
+            <p>{{ note.content }}</p>
+            <div class="note-btns">
+              <button (click)="editNote(note)">Edit</button>
+              <button class="del-btn" (click)="deleteNote(note.id!)">Delete</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
