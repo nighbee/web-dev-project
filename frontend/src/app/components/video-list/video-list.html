@@ -2,10 +2,10 @@
   <header>
     <h1>🧮 mathWay</h1>
     <div class="header-right">
-      <input 
-        type="text" 
-        placeholder="Search videos..." 
-        [(ngModel)]="searchBar" 
+      <input
+        type="text"
+        placeholder="Search videos..."
+        [(ngModel)]="searchBar"
       />
       <button (click)="logout()">Logout</button>
     </div>
@@ -33,11 +33,11 @@
         <div class="card">
           <div class="thumbnail" (click)="openVideo(video.id)">
             <img [src]="'https://img.youtube.com/vi/' + video.youtube_id + '/hqdefault.jpg'" [alt]="video.title" />
+            <button class="fav-icon" (click)="toggleFavorite(video.id); $event.stopPropagation()">
+              {{ isFavorite(video.id) ? '★' : '☆' }}
+            </button>
           </div>
           <span class="card-title" (click)="openVideo(video.id)">{{ video.title }}</span>
-          <button class="fav-icon" (click)="toggleFavorite(video.id)">
-            {{ isFavorite(video.id) ? '★' : '☆' }}
-          </button>
         </div>
       }
     }

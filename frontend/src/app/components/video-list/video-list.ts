@@ -13,7 +13,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
   templateUrl: './video-list.html',
   styleUrl: './video-list.css'
 })
-export class VideoListComponent implements OnInit {
+  export class VideoListComponent implements OnInit {
   videos: IVideo[] = [];
   favorites: IFavorite[] = [];
   searchBar: string = '';
@@ -22,8 +22,8 @@ export class VideoListComponent implements OnInit {
   loading: boolean = true;        // ← обязательно должна быть
 
   constructor(
-    private api: ApiService, 
-    private auth: AuthService, 
+    private api: ApiService,
+    private auth: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -102,7 +102,7 @@ this.api.getVideos().subscribe({
   get favoriteVideos(): IVideo[] {
     const favIds = this.favorites.map(f => f.video);
     return this.videos.filter(v =>
-      favIds.includes(v.id) && 
+      favIds.includes(v.id) &&
       v.title.toLowerCase().includes(this.searchBar.toLowerCase())
     );
   }
@@ -118,9 +118,9 @@ this.api.getVideos().subscribe({
   logout() {
     this.auth.logout().subscribe({
       next: () => this.router.navigate(['/login']),
-      error: () => { 
-        localStorage.removeItem('token'); 
-        this.router.navigate(['/login']); 
+      error: () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
       }
     });
   }
