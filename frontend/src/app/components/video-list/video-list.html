@@ -31,6 +31,9 @@
     @if (!loading) {
       @for (video of displayedVideos; track video.id) {
         <div class="card">
+          <div class="thumbnail" (click)="openVideo(video.id)">
+            <img [src]="'https://img.youtube.com/vi/' + video.youtube_id + '/hqdefault.jpg'" [alt]="video.title" />
+          </div>
           <span class="card-title" (click)="openVideo(video.id)">{{ video.title }}</span>
           <button class="fav-icon" (click)="toggleFavorite(video.id)">
             {{ isFavorite(video.id) ? '★' : '☆' }}
