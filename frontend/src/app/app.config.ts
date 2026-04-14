@@ -2,6 +2,8 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 //import { provideForms } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { importProvidersFrom } from '@angular/core';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './services/auth.interceptor';
@@ -14,4 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     //provideForms()
   ]
+    importProvidersFrom(ReactiveFormsModule, FormsModule),
+  ],
 };
