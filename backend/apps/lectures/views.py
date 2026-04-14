@@ -6,10 +6,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
-from .models import Video, Note, Favorite
+from .models import Video, Note, Favorite, Quiz, Question, Choice, QuizAttempt
 from .serializers import (
     VideoBasicSerializer, NoteSerializer, 
-    FavoriteSerializer, userLoginSerializer, UserRegistrationSerializer
+    FavoriteSerializer, userLoginSerializer, UserRegistrationSerializer,
+    QuizSerializer, QuizSubmissionSerializer
 )
 
 #  Function Based Views
@@ -138,3 +139,62 @@ class NoteDetailView(APIView):
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
         note.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Quiz Views
+
+class QuizDetailView(generics.RetrieveAPIView):
+    """
+    Returns the quiz and its questions for a specific video.
+    """
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'video_id'
+
+class QuizAttemptView(APIView):
+    """
+    Handles quiz submissions, calculates score, and updates user profile points.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, video_id):
+        try:
+            quiz = Quiz.objects.get(video_id=video_id)
+        except Quiz.DoesNotExist:
+            return Response({"detail": "Quiz not found for this video."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if user already attempted this quiz for points
+        if QuizAttempt.objects.filter(user=request.user, quiz=quiz).exists():
+            return Response({"detail": "You have already completed this quiz."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = QuizSubmissionSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        user_answers = serializer.validated_data['answers']
+        score = 0
+        total_questions = quiz.questions.count()
+
+        for question in quiz.questions.all():
+            submitted_choice_id = user_answers.get(str(question.id))
+            if submitted_choice_id:
+                try:
+                    choice = Choice.objects.get(id=submitted_choice_id, question=question)
+                    if choice.is_correct:
+                        score += 1
+                except Choice.DoesNotExist:
+                    pass
+
+        # Record the attempt
+        QuizAttempt.objects.create(user=request.user, quiz=quiz, score=score)
+
+        # Update user profile points
+        profile = request.user.profile
+        profile.points += score
+        profile.save()
+
+        return Response({
+            "score": score,
+            "total_questions": total_questions,
+            "new_total_points": profile.points
+        }, status=status.HTTP_200_OK)

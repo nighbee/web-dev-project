@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Video, Note, Favorite
-
+from .models import Video, Note, Favorite, Quiz, Question, Choice, QuizAttempt
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
@@ -58,3 +57,30 @@ class userLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password")
 
         return attrs
+
+# Quiz Serializers
+
+class ChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ['id', 'text']
+
+class QuestionSerializer(serializers.ModelSerializer):
+    choices = ChoiceSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Question
+        fields = ['id', 'text', 'choices']
+
+class QuizSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Quiz
+        fields = ['id', 'title', 'questions']
+
+class QuizSubmissionSerializer(serializers.Serializer):
+    # Format: { "question_id": choice_id }
+    answers = serializers.DictField(
+        child=serializers.IntegerField()
+    )

@@ -10,6 +10,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Video = apps.get_model('lectures', 'Video')
+        User = apps.get_model('auth', 'User')
+
+        # Create Admin
+        admin_user, created = User.objects.get_or_create(username='admin')
+        if created or not admin_user.is_superuser:
+            admin_user.set_password('admin')
+            admin_user.is_staff = True
+            admin_user.is_superuser = True
+            admin_user.save()
+            self.stdout.write(self.style.SUCCESS('Admin user "admin" created/updated.'))
         
         # Determine paths relative to the project root
         project_root = settings.BASE_DIR.parent

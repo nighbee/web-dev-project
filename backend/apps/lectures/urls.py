@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     get_all_videos, get_video_detail, user_logout, UserLoginView, UserRegistrationView,
     FavoriteListView, FavoriteDetailView,
-    NoteListCreateView, NoteDetailView
+    NoteListCreateView, NoteDetailView,
+    QuizDetailView, QuizAttemptView
 )
 
 urlpatterns = [
@@ -14,6 +15,10 @@ urlpatterns = [
     # Видео
     path('videos/', get_all_videos, name='video-list'),
     path('videos/<int:pk>/', get_video_detail, name='video-detail'),
+
+    # Квизы (Quizzes)
+    path('videos/<int:video_id>/quiz/', QuizDetailView.as_view(), name='quiz-detail'),
+    path('videos/<int:video_id>/quiz/submit/', QuizAttemptView.as_view(), name='quiz-submit'),
 
     # Избранное
     path('favorites/', FavoriteListView.as_view(), name='favorite-list'),
