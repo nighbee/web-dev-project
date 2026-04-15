@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IVideo } from '../models';
 import { ILeaderboardEntry } from '../models';
+import { IQuiz, IQuizSubmission, IQuizResult } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -76,6 +77,19 @@ export class ApiService {
 
   getCurrentUserProfile(): Observable<any> {
     return this.http.get(`${this.API_URL}/users/profile/`).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  // Quiz methods
+  getQuiz(videoId: number): Observable<IQuiz> {
+    return this.http.get<IQuiz>(`${this.API_URL}/videos/${videoId}/quiz/`).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  submitQuiz(videoId: number, answers: IQuizSubmission): Observable<IQuizResult> {
+    return this.http.post<IQuizResult>(`${this.API_URL}/videos/${videoId}/quiz/submit/`, answers).pipe(
       catchError((error) => this.handleError(error))
     );
   }

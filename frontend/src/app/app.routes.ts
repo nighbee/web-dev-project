@@ -14,5 +14,13 @@ export const routes: Routes = [
   {
     path: 'videos/:id',
     loadComponent: () => import('./components/video-detail/video-detail').then(m => m.VideoDetailComponent)
+  },
+  {
+    path: 'videos/:videoId/quiz',
+    loadComponent: () => import('./components/quiz/quiz').then(m => m.QuizComponent)
+  },
+  {
+    path: 'leaderboard',
+    loadComponent: () => import('./components/leaderboard/leaderboard').then(m => m.LeaderboardComponent)
   }
 ];

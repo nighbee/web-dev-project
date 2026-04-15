@@ -1,0 +1,110 @@
+<div class="quiz-container">
+  <!-- Loading State -->
+  <div *ngIf="loading && !submitted" class="loading">
+    <p>Загрузка quiz...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Quiz Form -->
+  <div *ngIf="quiz && !submitted" class="quiz-form">
+    <div class="quiz-header">
+      <h2>{{ quiz.title }}</h2>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="getProgressPercentage()"></div>
+      </div>
+      <p class="progress-text">{{ getProgressPercentage() }}% завершено</p>
+    </div>
+
+    <!-- Current Question -->
+    <div *ngIf="quiz.questions[currentQuestionIndex]" class="question-container">
+      <div class="question-number">
+        Вопрос {{ currentQuestionIndex + 1 }} из {{ quiz.questions.length }}
+      </div>
+
+      <div class="question-text">
+        {{ quiz.questions[currentQuestionIndex].text }}
+      </div>
+
+      <div class="choices">
+        <div
+          *ngFor="let choice of quiz.questions[currentQuestionIndex].choices"
+          class="choice"
+          [class.selected]="getSelectedAnswer(quiz.questions[currentQuestionIndex].id) === choice.id">
+          <input
+            type="radio"
+            [id]="'choice-' + choice.id"
+            [name]="'question-' + quiz.questions[currentQuestionIndex].id"
+            [value]="choice.id"
+            (change)="selectAnswer(quiz.questions[currentQuestionIndex].id, choice.id)" />
+          <label [for]="'choice-' + choice.id">{{ choice.text }}</label>
+        </div>
+      </div>
+
+      <div class="navigation-buttons">
+        <button
+          (click)="previousQuestion()"
+          [disabled]="currentQuestionIndex === 0"
+          class="btn-nav">
+          ← Назад
+        </button>
+
+        <button
+          *ngIf="currentQuestionIndex < quiz.questions.length - 1"
+          (click)="nextQuestion()"
+          class="btn-nav">
+          Далее →
+        </button>
+
+        <button
+          *ngIf="currentQuestionIndex === quiz.questions.length - 1"
+          (click)="submitQuiz()"
+          class="btn-submit">
+          Отправить ответы
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="submitted && result" class="results">
+    <div class="results-header">
+      <h2>Результаты Quiz 🎉</h2>
+    </div>
+
+    <div class="results-body">
+      <div class="result-item">
+        <span>Ваш результат:</span>
+        <strong>{{ result.score }} / {{ result.total_questions }}</strong>
+      </div>
+
+      <div class="result-item">
+        <span>Процент:</span>
+        <strong
+          [class.excellent]="(result.score / result.total_questions) * 100 >= 80"
+          [class.good]="(result.score / result.total_questions) * 100 >= 60 && (result.score / result.total_questions) * 100 < 80"
+          [class.poor]="(result.score / result.total_questions) * 100 < 60">
+          {{ ((result.score / result.total_questions) * 100).toFixed(0) }}%
+        </strong>
+      </div>
+
+      <div class="result-item">
+        <span>Баллы добавлены:</span>
+        <strong>+{{ result.score }} баллов</strong>
+      </div>
+
+      <div class="result-item">
+        <span>Ваши общие баллы:</span>
+        <strong>{{ result.new_total_points }} баллов</strong>
+      </div>
+    </div>
+
+    <div class="results-footer">
+      <button (click)="goBackToVideo()" class="btn-primary">Вернуться к видео</button>
+      <a routerLink="/leaderboard" class="btn-secondary">Посмотреть Leaderboard</a>
+    </div>
+  </div>
+</div>

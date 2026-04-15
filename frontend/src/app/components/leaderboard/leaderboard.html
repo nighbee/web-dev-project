@@ -1,0 +1,59 @@
+<div class="leaderboard-container">
+  <div class="leaderboard-header">
+    <h1>🏆 Leaderboard 🏆</h1>
+    <p class="subtitle">Топ пользователей по набранным баллам</p>
+    <button (click)="refreshManually()" class="btn-refresh" [disabled]="loading">
+      {{ loading ? 'Загрузка...' : '🔄 Обновить' }}
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading && leaderboard.length === 0" class="loading">
+    <p>Загрузка leaderboard...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Leaderboard Table -->
+  <div *ngIf="!loading || leaderboard.length > 0" class="leaderboard-content">
+    <div class="leaderboard-table">
+      <div class="table-header">
+        <div class="column rank">Место</div>
+        <div class="column username">Пользователь</div>
+        <div class="column points">Баллы</div>
+      </div>
+
+      <div
+        *ngFor="let entry of leaderboard; let i = index"
+        class="table-row"
+        [class]="getRankClass(entry.rank)">
+        <div class="column rank">
+          <span class="medal" *ngIf="entry.rank <= 3">{{ getMedalIcon(entry.rank) }}</span>
+          <span class="rank-number">#{{ entry.rank }}</span>
+        </div>
+
+        <div class="column username">
+          <span class="username-text">{{ entry.username }}</span>
+        </div>
+
+        <div class="column points">
+          <span class="points-value">{{ entry.points }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="leaderboard.length === 0" class="empty-state">
+      <p>Пока нет данных в leaderboard. Начните проходить quiz тесты!</p>
+    </div>
+  </div>
+
+  <div class="leaderboard-footer">
+    <p class="auto-refresh-info">
+      {{ autoRefresh ? '🔄 Leaderboard обновляется автоматически каждые 30 секунд' : '' }}
+    </p>
+  </div>
+</div>

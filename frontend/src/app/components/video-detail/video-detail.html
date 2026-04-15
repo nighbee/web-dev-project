@@ -13,9 +13,14 @@
     </div>
 
     @if (auth.isLoggedIn()) {
-      <button class="fav-btn" (click)="toggleFavorite()">
-        {{ isFavorite ? '? Remove from Favorites' : '? Add to Favorites' }}
-      </button>
+      <div class="action-buttons">
+        <button class="fav-btn" (click)="toggleFavorite()">
+          {{ isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites' }}
+        </button>
+        <button class="quiz-btn" (click)="router.navigate(['/videos', videoId, 'quiz'])">
+          📝 Take Quiz
+        </button>
+      </div>
 
       <div class="notes-section">
         <h3>My Notes</h3>

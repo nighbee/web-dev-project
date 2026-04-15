@@ -26,10 +26,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');
   const router = inject(Router);
 
+  console.log('Interceptor: URL=', req.url, 'Token=', token ? 'EXISTS' : 'MISSING');
+
   if (token) {
     const cloned = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` }
     });
+    
+    console.log('Interceptor: Added token to request');
     
     return next(cloned).pipe(
       catchError(error => {
@@ -43,6 +47,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     );
   }
 
+  console.log('Interceptor: No token found, sending request without auth');
   return next(req);
 };
 

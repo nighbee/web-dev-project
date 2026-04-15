@@ -3,8 +3,49 @@
 h2 { margin-bottom: 1rem; }
 .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 1rem; }
 .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; }
-.fav-btn { padding: 0.6rem 1.2rem; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-bottom: 1.5rem; }
-.fav-btn:hover { background: #d97706; }
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.fav-btn, .quiz-btn { 
+  padding: 0.6rem 1.2rem; 
+  color: white; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.fav-btn { 
+  background: #f59e0b;
+  flex: 1;
+  min-width: 150px;
+}
+
+.fav-btn:hover { 
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.quiz-btn {
+  background: #8b5cf6;
+  flex: 1;
+  min-width: 150px;
+}
+
+.quiz-btn:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+}
+
 .notes-section h3 { margin-bottom: 0.8rem; }
 textarea { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; resize: vertical; box-sizing: border-box; }
 .note-actions { display: flex; gap: 0.5rem; margin: 0.6rem 0 1rem; }
@@ -15,3 +56,14 @@ textarea { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 
 .note-btns button { padding: 0.3rem 0.7rem; border: none; border-radius: 4px; cursor: pointer; background: #3b82f6; color: white; font-size: 0.85rem; }
 .del-btn { background: #ef4444 !important; }
 .error { color: red; }
+
+@media (max-width: 600px) {
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .fav-btn, .quiz-btn {
+    width: 100%;
+    min-width: unset;
+  }
+}

@@ -10,6 +10,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Video = apps.get_model('lectures', 'Video')
+        Quiz = apps.get_model('lectures', 'Quiz')
+        Question = apps.get_model('lectures', 'Question')
+        Choice = apps.get_model('lectures', 'Choice')
         User = apps.get_model('auth', 'User')
 
         # Create Admin
@@ -61,6 +64,44 @@ class Command(BaseCommand):
                 if created:
                     self.stdout.write(self.style.SUCCESS(f"Created: {title}"))
                     count += 1
+                    
+                    # Create quiz for this video
+                    quiz, quiz_created = Quiz.objects.get_or_create(
+                        video=video,
+                        defaults={'title': f"Quiz: {title}"}
+                    )
+                    
+                    if quiz_created:
+                        # Create sample questions
+                        questions_data = [
+                            {
+                                "text": "Question 1?",
+                                "choices": [
+                                    {"text": "Option A", "is_correct": True},
+                                    {"text": "Option B", "is_correct": False},
+                                    {"text": "Option C", "is_correct": False},
+                                ]
+                            },
+                            {
+                                "text": "Question 2?",
+                                "choices": [
+                                    {"text": "Answer 1", "is_correct": False},
+                                    {"text": "Answer 2", "is_correct": True},
+                                    {"text": "Answer 3", "is_correct": False},
+                                ]
+                            }
+                        ]
+                        
+                        for q_data in questions_data:
+                            question = Question.objects.create(quiz=quiz, text=q_data['text'])
+                            for choice_data in q_data['choices']:
+                                Choice.objects.create(
+                                    question=question,
+                                    text=choice_data['text'],
+                                    is_correct=choice_data['is_correct']
+                                )
+                        
+                        self.stdout.write(self.style.SUCCESS(f"  Created quiz with 2 questions for: {title}"))
                 else:
                     self.stdout.write(self.style.WARNING(f"Skipped (already exists): {title}"))
 
