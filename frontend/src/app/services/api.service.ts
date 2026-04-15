@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IVideo } from '../models';
+import { ILeaderboardEntry } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -63,6 +64,18 @@ export class ApiService {
 
   removeFavorite(id: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/favorites/${id}/`).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getLeaderboard(): Observable<ILeaderboardEntry[]> {
+    return this.http.get<ILeaderboardEntry[]>(`${this.API_URL}/users/leaderboard/`).pipe(
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getCurrentUserProfile(): Observable<any> {
+    return this.http.get(`${this.API_URL}/users/profile/`).pipe(
       catchError((error) => this.handleError(error))
     );
   }

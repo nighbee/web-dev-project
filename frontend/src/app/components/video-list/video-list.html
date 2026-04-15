@@ -2,6 +2,13 @@
   <header>
     <h1>🧮 mathWay</h1>
     <div class="header-right">
+<!--      <div class="progress-widget" [class.visible]="currentUserProfile" (click)="showLeaderboard = true; showFavs = false" title="View Leaderboard">-->
+<!--        <span class="level-badge">Lvl {{ level }}</span>-->
+<!--        <div class="progress-bar-wrap">-->
+<!--          <div class="progress-bar-fill" [style.width.%]="progressPercent"></div>-->
+<!--        </div>-->
+<!--        <span class="progress-pts">{{ progressPoints }} / 100</span>-->
+<!--      </div>-->
       <input
         type="text"
         placeholder="Search videos..."
@@ -12,15 +19,64 @@
   </header>
 
   <nav class="tabs">
-    <button [class.active]="!showFavs" (click)="showFavs = false">All Videos</button>
-    <button [class.active]="showFavs" (click)="showFavs = true">★ Favorites</button>
+    <button [class.active]="!showFavs && !showLeaderboard" (click)="showFavs = false; showLeaderboard = false">All Videos</button>
+    <button [class.active]="showFavs" (click)="showFavs = true; showLeaderboard = false">★ Favorites</button>
+    <button [class.active]="showLeaderboard" (click)="showLeaderboard = true; showFavs = false">Leaderboard</button>
   </nav>
 
   @if (errorMessage) {
     <p class="error">{{ errorMessage }}</p>
   }
 
-  <!-- Основной блок с видео -->
+  @if (showLeaderboard) {
+    <div class="leaderboard">
+      @if (topThree.length > 0) {
+        <div class="podium">
+          <div class="podium-spot p2">
+            <div class="medal">🥈</div>
+            <div class="podium-card">
+              <span class="podium-username">{{ topThree[1]?.username }}</span>
+              <span class="podium-points">{{ topThree[1]?.points }} pts</span>
+            </div>
+          </div>
+          <div class="podium-spot p1">
+            <div class="medal">🥇</div>
+            <div class="podium-card">
+              <span class="podium-username">{{ topThree[0]?.username }}</span>
+              <span class="podium-points">{{ topThree[0]?.points }} pts</span>
+            </div>
+          </div>
+          <div class="podium-spot p3">
+            <div class="medal">🥉</div>
+            <div class="podium-card">
+              <span class="podium-username">{{ topThree[2]?.username }}</span>
+              <span class="podium-points">{{ topThree[2]?.points }} pts</span>
+            </div>
+          </div>
+        </div>
+      }
+      @if (currentUserProfile) {
+        <div class="your-score-section">
+          <h2>Your Rank</h2>
+          <div class="surrounding-list">
+            @for (entry of surroundingUsers; track entry.rank) {
+              <div class="leaderboard-row" [class.current-user]="isCurrentUserEntry(entry.username)">
+                <span class="rank">#{{ entry.rank }}</span>
+                <span class="username">{{ entry.username }}</span>
+                <span class="points">{{ entry.points }} pts</span>
+              </div>
+            }
+          </div>
+          <p class="your-rank">
+            You are ranked <strong>#{{ currentUserRank }}</strong> out of
+            <strong>{{ leaderboard.length }}</strong> users
+          </p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (!showLeaderboard) {
   <div class="grid">
     <!-- 1. Пока загружаются видео -->
     @if (loading) {
@@ -49,4 +105,5 @@
       </p>
     }
   </div>
+  }
 </div>
