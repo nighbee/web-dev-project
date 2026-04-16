@@ -1,0 +1,70 @@
+<div class="profile-page">
+  <header class="profile-header">
+    <button class="back-btn" (click)="goBack()">← Back</button>
+    <h1>Your Profile</h1>
+  </header>
+
+  @if (loading) {
+    <p class="loading">Loading profile...</p>
+  }
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (!loading && currentUserProfile) {
+    <div class="profile-content">
+      <!-- Left column: Avatar + Username + Points -->
+      <div class="profile-left">
+        <div class="avatar-section">
+          <img
+            [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + currentUserProfile.user.username"
+            alt="Avatar"
+            class="profile-avatar"
+          />
+          <h2 class="profile-username">{{ currentUserProfile.user.username }}</h2>
+          <div class="profile-points">
+            <span class="points-label">Points</span>
+            <span class="points-value">{{ currentUserProfile.points }} pts</span>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements-section">
+          <h3>Achievements</h3>
+          <div class="achievements-list">
+            @for (achievement of achievements; track achievement.threshold) {
+              <div class="achievement-item" [class.achieved]="achievement.achieved">
+                <div class="achievement-icon">{{ achievement.icon }}</div>
+                <div class="achievement-info">
+                  <span class="achievement-name">{{ achievement.name }}</span>
+                  <span class="achievement-desc">{{ achievement.description }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: Leaderboard -->
+      <div class="profile-right">
+        <div class="your-score-section">
+          <h3>Your Rank</h3>
+          <div class="surrounding-list">
+            @for (entry of surroundingUsers; track entry.rank) {
+              <div class="leaderboard-row" [class.current-user]="isCurrentUserEntry(entry.username)">
+                <span class="rank">#{{ entry.rank }}</span>
+                <span class="username">{{ entry.username }}</span>
+                <span class="points">{{ entry.points }} pts</span>
+              </div>
+            }
+          </div>
+          <p class="your-rank">
+            You are ranked <strong>#{{ currentUserRank }}</strong> out of
+            <strong>{{ leaderboard.length }}</strong> users
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

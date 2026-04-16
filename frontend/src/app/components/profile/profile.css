@@ -1,0 +1,206 @@
+.profile-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.back-btn {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.back-btn:hover { background: #dc2626; }
+
+.profile-header h1 { margin: 0; color: #333; }
+
+.loading, .error { text-align: center; padding: 2rem; }
+.error { color: red; }
+
+/* ── Profile Content Layout ── */
+.profile-content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ── Left Column ── */
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #e5e7eb;
+}
+
+.profile-username {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.profile-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.points-label {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.points-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4f46e5;
+}
+
+/* ── Achievements ── */
+.achievements-section { width: 100%; }
+
+.achievements-section h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  transition: all 0.2s;
+}
+
+.achievement-item.achieved {
+  background: linear-gradient(135deg, #fff9c4, #ffe082);
+  border-color: #f9a825;
+}
+
+.achievement-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  filter: grayscale(1) opacity(0.4);
+}
+.achievement-item.achieved .achievement-icon {
+  filter: none;
+}
+
+.achievement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.achievement-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.achievement-desc {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* ── Right Column ── */
+.profile-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.your-score-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.your-score-section h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.surrounding-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+  width: 100%;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  background: #f9fafb;
+  width: 380px;
+}
+.leaderboard-row.current-user {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.rank { font-weight: 700; font-size: 1rem; min-width: 30px; }
+.username { flex: 1; font-weight: 600; font-size: 0.95rem; }
+.points { color: #555; font-size: 0.9rem; }
+
+.your-rank {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+  .leaderboard-row { width: 100%; max-width: 380px; }
+}

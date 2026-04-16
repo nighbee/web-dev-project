@@ -103,12 +103,12 @@ import { IVideo, IFavorite } from '../../models';
 
   get level(): number {
     if (!this.currentUserProfile) return 1;
-    return (Math.floor(this.currentUserProfile.points / 100) % 10) + 1;
+    return (Math.floor(this.currentUserProfile.points / 10) % 10) + 1;
   }
 
   get progressPoints(): number {
     if (!this.currentUserProfile) return 0;
-    return this.currentUserProfile.points % 100;
+    return this.currentUserProfile.points % 10;
   }
 
   get progressPercent(): number {
@@ -179,6 +179,10 @@ import { IVideo, IFavorite } from '../../models';
 
   openVideo(id: number) {
     this.router.navigate(['/videos', id]);
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile']);
   }
 
   logout() {

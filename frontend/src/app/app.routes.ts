@@ -22,5 +22,9 @@ export const routes: Routes = [
   {
     path: 'leaderboard',
     loadComponent: () => import('./components/leaderboard/leaderboard').then(m => m.LeaderboardComponent)
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./components/profile/profile').then(m => m.ProfileComponent)
   }
 ];

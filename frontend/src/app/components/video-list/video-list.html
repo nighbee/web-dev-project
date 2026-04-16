@@ -2,13 +2,16 @@
   <header>
     <h1>🧮 mathWay</h1>
     <div class="header-right">
-<!--      <div class="progress-widget" [class.visible]="currentUserProfile" (click)="showLeaderboard = true; showFavs = false" title="View Leaderboard">-->
-<!--        <span class="level-badge">Lvl {{ level }}</span>-->
-<!--        <div class="progress-bar-wrap">-->
-<!--          <div class="progress-bar-fill" [style.width.%]="progressPercent"></div>-->
-<!--        </div>-->
-<!--        <span class="progress-pts">{{ progressPoints }} / 100</span>-->
-<!--      </div>-->
+      <div class="progress-widget" [class.visible]="currentUserProfile" (click)="showLeaderboard = true; showFavs = false" title="View Leaderboard">
+        <span class="level-badge">Lvl {{ level }}</span>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" [style.width.%]="progressPercent"></div>
+        </div>
+        <span class="progress-pts">{{ progressPoints }} / 10</span>
+      </div>
+      <button class="avatar-btn" (click)="goToProfile()" title="Your Profile">
+        Profile
+      </button>
       <input
         type="text"
         placeholder="Search videos..."
