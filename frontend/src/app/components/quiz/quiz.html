@@ -12,7 +12,10 @@
   <!-- Quiz Form -->
   <div *ngIf="quiz && !submitted" class="quiz-form">
     <div class="quiz-header">
-      <h2>{{ quiz.title }}</h2>
+      <div class="quiz-header-row">
+        <button (click)="goBackToVideo()" class="btn-back">← Back to Video</button>
+        <h2>{{ quiz.title }}</h2>
+      </div>
       <div class="progress-bar">
         <div class="progress" [style.width.%]="getProgressPercentage()"></div>
       </div>
